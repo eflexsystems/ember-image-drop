@@ -36,9 +36,9 @@ test('background image updates with image', function(assert) {
   this.render(hbs`{{image-drop image=image}}`);
 
   let backgroundImage = this.$('.ember-image-drop').css('background-image');
-  assert.equal(backgroundImage, "url(data:fakeimagedata)");
+  assert.equal(backgroundImage, 'url("data:fakeimagedata")');
 
   this.set('image', 'data:pancakes');
   backgroundImage = this.$('.ember-image-drop').css('background-image');
-  assert.equal(backgroundImage, "url(data:pancakes)");
+  assert.equal(backgroundImage, 'url("data:pancakes")');
 });

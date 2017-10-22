@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { htmlSafe } from '@ember/string';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import layout from '../templates/components/image-drop';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout: layout,
   classNames: ['ember-image-drop'],
   attributeBindings: ['style'],
@@ -12,21 +15,21 @@ export default Ember.Component.extend({
   image: null,
   file: null,
 
-  textStyle: Ember.computed('image', function() {
+  textStyle: computed('image', function() {
     let textStyle = "";
     if (this.get('hideTextOnImage') && this.get('image')) {
       textStyle = "display: none;";
     }
-    return Ember.String.htmlSafe(textStyle);
+    return htmlSafe(textStyle);
   }),
 
-  style: Ember.computed('image', function() {
+  style: computed('image', function() {
     let backgroundStyle = "";
     if (this.get('image')) {
       backgroundStyle =  `background-image: url(${this.get('image')});`;
     }
 
-    return Ember.String.htmlSafe(backgroundStyle);
+    return htmlSafe(backgroundStyle);
   }),
 
   didInsertElement() {
@@ -51,7 +54,7 @@ export default Ember.Component.extend({
     var reader = new FileReader();
     reader.onload = (e) => {
       var fileToUpload = e.target.result;
-      Ember.run(() => {
+      run(() => {
         this.set('image', fileToUpload);
       });
     };
